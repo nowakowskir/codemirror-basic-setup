@@ -1,12 +1,11 @@
-import {keymap, highlightSpecialChars, drawSelection, highlightActiveLine, dropCursor,
+import {keymap, highlightSpecialChars, drawSelection, dropCursor,
         rectangularSelection, crosshairCursor,
-        lineNumbers, highlightActiveLineGutter} from "@codemirror/view"
+        lineNumbers} from "@codemirror/view"
 import {Extension, EditorState} from "@codemirror/state"
-import {defaultHighlightStyle, syntaxHighlighting, indentOnInput, bracketMatching,
-        foldGutter, foldKeymap} from "@codemirror/language"
+import {defaultHighlightStyle, syntaxHighlighting, indentOnInput, bracketMatching} from "@codemirror/language"
 import {defaultKeymap, history, historyKeymap} from "@codemirror/commands"
-import {searchKeymap, highlightSelectionMatches} from "@codemirror/search"
-import {autocompletion, completionKeymap, closeBrackets, closeBracketsKeymap} from "@codemirror/autocomplete"
+import {searchKeymap} from "@codemirror/search"
+import {completionKeymap, closeBrackets, closeBracketsKeymap} from "@codemirror/autocomplete"
 import {lintKeymap} from "@codemirror/lint"
 
 // (The superfluous function calls around the list of extensions work
@@ -49,10 +48,8 @@ import {lintKeymap} from "@codemirror/lint"
 /// as desired.
 export const basicSetup: Extension = (() => [
   lineNumbers(),
-  highlightActiveLineGutter(),
   highlightSpecialChars(),
   history(),
-  foldGutter(),
   drawSelection(),
   dropCursor(),
   EditorState.allowMultipleSelections.of(true),
@@ -60,17 +57,13 @@ export const basicSetup: Extension = (() => [
   syntaxHighlighting(defaultHighlightStyle, {fallback: true}),
   bracketMatching(),
   closeBrackets(),
-  autocompletion(),
   rectangularSelection(),
   crosshairCursor(),
-  highlightActiveLine(),
-  highlightSelectionMatches(),
   keymap.of([
     ...closeBracketsKeymap,
     ...defaultKeymap,
     ...searchKeymap,
     ...historyKeymap,
-    ...foldKeymap,
     ...completionKeymap,
     ...lintKeymap
   ])
